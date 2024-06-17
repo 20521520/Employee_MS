@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Login.css'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 
 const Login = () => {
@@ -11,10 +12,23 @@ const Login = () => {
     password: ''
   })
 
+  const [error, setError] = useState(null)
+
+  const navigate = useNavigate()
+
+  axios.defaults.withCredentials = true;
+
   const handleSubmit = (event => {
     event.preventDefault()
     axios.post('http://localhost:3000/auth/adminlogin', values)
-    .then(result => console.log(result))
+    .then(result => {
+    if(result.data.loginStatus) {
+      navigate('/Dashboard')
+    } else {
+      setError(result.data.Error)
+      alert("pls check your email or password")
+    }
+    })
     .catch(err => console.log(err))
   })
 
@@ -22,7 +36,11 @@ const Login = () => {
     <div className='body'>
       <div className='wrapper'>
         <form action="" onSubmit={handleSubmit}>
-      
+
+        <div className='text-warning'>
+            {error && error}
+        </div>
+
           <h1>Login</h1>
      
           <div className='inputBox'>
