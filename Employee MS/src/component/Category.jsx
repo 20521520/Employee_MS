@@ -16,6 +16,8 @@ const Category = () => {
             }
         }).catch(err => console.log(err))
     }, [])
+
+    
   return (
     <div className='px-5 mt-3'>
         <div className='d-flex justify-content-center'>
