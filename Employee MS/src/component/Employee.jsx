@@ -7,6 +7,16 @@ const Employee = () => {
   const [employee, setEmployee] = useState([]);
   const navigate = useNavigate()
 
+  useEffect(()=> {
+    axios.get('http://localhost:3000/auth/employee')
+    .then(result => {
+        if(result.data.Status) {
+          setEmployee(result.data.Result);
+        } else {
+            alert(result.data.Error)
+        }
+    }).catch(err => console.log(err))
+    }, [])
  
  
   return (
@@ -30,6 +40,24 @@ const Employee = () => {
             </tr>
           </thead>
           <tbody>
+            {
+              employee.map( e=> (
+                <tr>
+                  <td>{e.name}</td>
+                  <td>
+                  <img
+                    src={`http://localhost:3000/Images/` + e.image}
+                    className="employee_image"
+                  />
+                </td>
+                  <td>{e.email}</td>
+                  <td>{e.address}</td>
+                  <td>{e.salary}</td>
+                  <td>{e.email}</td>
+                </tr>
+              ))
+            }
+            
           </tbody>
         </table>
       </div>

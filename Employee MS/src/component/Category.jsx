@@ -28,6 +28,7 @@ const Category = () => {
             <table className='table'>
                 <thead>
                     <tr>
+                        <th>id</th>
                         <th>Name</th>
                     </tr>
                 </thead>
@@ -35,6 +36,7 @@ const Category = () => {
                     {
                         category.map(c => (
                             <tr>
+                                <td>{c.id}</td>
                                 <td>{c.name}</td>
                             </tr>
                         ))

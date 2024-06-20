@@ -3,6 +3,8 @@ import con from "../utils/db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt'
 import multer from 'multer'
+import path from "path";
+
 
 const router = express.Router();
 
@@ -32,6 +34,14 @@ router.get('/category', (req, res) => {
       return res.json({Status: true, Result: result})
   })
 })
+
+router.get('/employee', (req, res) => {
+  const sql = "SELECT * FROM employee";
+  con.query(sql, (err, result) => {
+      if(err) return res.json({Status: false, Error: "Query Error"})
+      return res.json({Status: true, Result: result})
+  })
+  })
 
 router.post('/add_category', (req, res) => {
   const sql = "INSERT INTO category (`name`) VALUES (?) "
@@ -66,7 +76,7 @@ router.post('/add_employee', upload.single('image'),(req, res) => {
         hash,
         req.body.address,
         req.body.salary,
-        req.body.image,
+        req.file.filename,
         req.body.category_id, 
       ]
       con.query(sql, [values], (err, result) => {
@@ -75,7 +85,10 @@ router.post('/add_employee', upload.single('image'),(req, res) => {
     })
   })
 
-  
+
+
+
+
 
 })
 
