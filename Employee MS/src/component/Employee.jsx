@@ -2,6 +2,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import './Employee.css'
 
 const Employee = () => {
   const [employee, setEmployee] = useState([]);
@@ -18,6 +19,17 @@ const Employee = () => {
     }).catch(err => console.log(err))
     }, [])
  
+    const handleDelete = (id) => {
+      axios.delete('http://localhost:3000/auth/delete_employee/' +id)
+      .then(result => {
+        if(result.data.Result){
+          window.location.reload()
+          alert("Deleted")
+        } else{
+          alert(result.data.Error)
+        }
+      })
+    }
  
   return (
     <div className="px-5 mt-3">
@@ -54,6 +66,10 @@ const Employee = () => {
                   <td>{e.address}</td>
                   <td>{e.salary}</td>
                   <td>{e.email}</td>
+                  <td>
+                    <Link to={'/dashboard/edit_employee/' + e.id} className="btn btn-info btn-sm">Edit</Link>
+                    <button className="btn btn-warning btn-sm" style={{ marginLeft: '10px' }} onClick={() => handleDelete(e.id)}>Deteled</button>
+                  </td>
                 </tr>
               ))
             }
