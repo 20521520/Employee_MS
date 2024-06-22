@@ -10,13 +10,17 @@ import Profile from './component/Profile'
 import AddCategory from './component/AddCategory'
 import AddEmployee from './component/AddEmployee'
 import EditEmployee from './component/EditEmployee'
+import Start from './component/Start'
+import EmployeeLogin from './component/EmployeeLogin'
 
 function App() {
 
   return (
     <BrowserRouter>
     <Routes>
+      <Route path='/Start' element={<Start/>}></Route>
       <Route path='/adminlogin' element={<Login/>}></Route>
+      <Route path='/employee_login' element={<EmployeeLogin/>}></Route>
       <Route path='/dashboard' element={<Dashboard/>}>
         <Route path='' element={<Home/>}></Route>
         <Route path='/dashboard/employee' element={<Employee/>}></Route>
