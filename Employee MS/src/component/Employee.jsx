@@ -65,7 +65,7 @@ const Employee = () => {
                   <td>{e.email}</td>
                   <td>{e.address}</td>
                   <td>{e.salary}</td>
-                  <td>{e.email}</td>
+                  
                   <td>
                     <Link to={'/dashboard/edit_employee/' + e.id} className="btn btn-info btn-sm">Edit</Link>
                     <button className="btn btn-warning btn-sm" style={{ marginLeft: '10px' }} onClick={() => handleDelete(e.id)}>Deteled</button>
