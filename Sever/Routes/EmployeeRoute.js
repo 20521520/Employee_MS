@@ -1,13 +1,9 @@
-import express, { response } from "express";
+import express from 'express'
 import con from "../utils/db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt'
-import multer from 'multer'
-import path from "path";
 
-
-const router = express.Router();
-
+const router = express.Router()
 
 router.post("/employee_login", (req, res) => {
     const sql = "SELECT * from employee Where email = ?";
@@ -27,10 +23,25 @@ router.post("/employee_login", (req, res) => {
                 return res.json({ loginStatus: true, id: result[0].id });
             }
         })
+        
       } else {
           return res.json({ loginStatus: false, Error:"wrong email or password" });
       }
     });
   });
 
-export {router as EmployeeRouter}
+  router.get('/detail/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM employee where id = ?"
+    con.query(sql, [id], (err, result) => {
+        if(err) return res.json({Status: false});
+        return res.json(result)
+    })
+  })
+
+  router.get('/logout', (req, res) => {
+    res.clearCookie('token')
+    return res.json({Status: true})
+  })
+
+  export {router as EmployeeRouter}
